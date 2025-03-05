@@ -1,2 +1,0 @@
-- name: Dump printer config
-  hosts: rpi
