@@ -1,0 +1,31 @@
+- name: Firmware
+  hosts: rpi
+  tasks:
+    - name: Include related variables
+      ansible.builtin.include_vars:
+        file: '{{ item.file }}'
+        name: '{{ item.name }}'
+      loop:
+        - { file: vars/klipper.yaml, name: klipper }
+
+    - name: 'Stop {{ service_name }}.service'
+      ansible.builtin.systemd_service:
+        name: '{{ service_name }}.service'
+        state: stopped
+      become: yes
+
+    - name: make
+      ansible.builtin.shell: make
+      args:
+        chdir: '{{ klipper.dir }}'
+
+    - name: Flash
+      ansible.builtin.shell: make flash FLASH_DEVICE=$(ls /dev/serial/by-id/*)
+      args:
+        chdir: '{{ klipper.dir }}'
+
+    - name: 'Stop {{ service_name }}.service'
+      ansible.builtin.systemd_service:
+        name: '{{ service_name }}.service'
+        state: started
+      become: yes

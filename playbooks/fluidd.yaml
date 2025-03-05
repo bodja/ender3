@@ -28,8 +28,7 @@
   - name: Download
     ansible.builtin.unarchive:
       remote_src: yes
-#      src: 'https://github.com/{{ repo_name }}/releases/latest/download/fluidd.zip'
-      src: 'https://github.com/{{ repo_name }}/releases/download/{{ version }}/fluidd.zip'
+      src: 'https://github.com/{{ repo_name }}/releases/latest/download/fluidd.zip'
       dest: '{{ dir }}'
 
   - name: NGINX config

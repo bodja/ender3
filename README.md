@@ -1,7 +1,7 @@
 # Ender3 on steroids
 (Creality 1.1.5 / tmc2208 UART) with Klipper on Raspberry Pi 3 Model B
 
-**This repo is just a documentation and dump for myself on what I did. An easy way to recall and recover things. And maybe for someone else, who has stepped on same the road of customizing his old Ender.**
+**This repo is just a documentation and dump for myself on what I did. An easy way to recall and recover things. And maybe for someone else, who has stepped on same the road of customizing their old Ender.**
 
 - [Klipper](https://github.com/Klipper3d/klipper) (3d-Printer firmware)
 - [Moonraker](https://github.com/Arksine/moonraker) (Python 3 based web server. Exposes API of the printer with Klipper firmware which is commonly used by web interfaces like Fluidd and [Mainsail](https://github.com/mainsail-crew/mainsail))
@@ -9,7 +9,7 @@
 
 ## Installation guide
 
-### 1. Install `Raspberry Pi OS Lite`
+### 1. Install `Raspberry Pi OS Lite` (both 32 and 64 bit will work fine)
 Use [raspberry Pi Imager](https://www.raspberrypi.com/software/) for installation.
 Before installing, make sure that in settings ssh service is activated and add ssh key. 
 
@@ -19,7 +19,7 @@ source ./install.sh
 ```
 
 ### 3. Install Klipper firmware to the printer board.
-From Raspberry Pi shell.
+First installation is a bit tricky, but after that it is as easy as described in [Klipper Installation](https://www.klipper3d.org/Installation.html).
 
 #### 3.1 Compile firmware
 Open firmware configuration menu, choose `atmega1284p` and save it
@@ -35,28 +35,32 @@ Creality 1.1.5 ICSP:
 MOSI  00  SCK
  VCC  00  MISO
 ```
-Raspberry Pi 2 B GPIO:
+
+Raspberry Pi header map:
+
+Note: mapped with [WiringPi pin numbering scheme](https://pinout.xyz/pinout/wiringpi) and avrdude is configured for `type=linuxgpio`.
+Don't get confused with [Raspberry Pi GPIO](https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#gpio):
 ```
-               00
-               00
-               00
-               00 
-               00
-               00
-               00
-               00
-(VCC)    3.3v  00  GPIO5 (MISO)
-(MOSI) GPIO12  00  GND
-(RST)  GPIO13  00  GPIO6 (SCK)
-               00
-               00
-               00
-               00
-               00
-               00
-               00
-               00
-               00
+                   00  5V
+                   00
+                   00
+                   00
+                   00
+                   00
+                   00
+                   00
+(VCC)        3.3v  00  WiringPi5 (MISO)
+(MOSI) WiringPi12  00  GND
+(RST)  WiringPi13  00  WiringPi6 (SCK)
+                   00
+                   00
+                   00
+                   00
+                   00
+                   00
+                   00
+                   00
+                   00
 ```
 My wiring colors map:
 ```
@@ -127,12 +131,12 @@ It is recommended to always use `spreadCycle` mode (by not specifying `stealthch
 ![1.1.5-front.jpeg](docs/printer/1.1.5-front.jpeg)
 
 ## Other refs
-- (KAMP)(https://github.com/kyleisah/Klipper-Adaptive-Meshing-Purging). I am using it for parking and purging.
+- [KAMP](https://github.com/kyleisah/Klipper-Adaptive-Meshing-Purging). I was using it purging and nice smart parking
 
 ## Mods:
 - (Enclosure for electronics)[https://www.printables.com/model/1199913-ender-3-raspberry-pi-housing]
 - (Cooling)[https://cults3d.com/en/3d-model/tool/minimus-snap-4010-3-pro-3v2-5-neo-max]
-- (Wiring)[https://cults3d.com/en/3d-model/tool/minimus-hotend-cooler-system]
+- (Wiring)[https://cults3d.com/en/3d-model/tool/armadillo-flex-wire-conduit]
 - (PSU relocation)[https://www.thingiverse.com/thing:5394166]
 - (LGX Lite PRO eXtruder)[https://www.bondtech.se/product/lgx-lite-pro-extruder/]
 - (Hotend)[https://www.bondtech.se/product/copperhead-for-ender-cr-10s-on-ddx-ph2/]
