@@ -1,23 +1,17 @@
-#- name: Run system dependencies playbook
-#  import_playbook: playbooks/deps.yaml
-#
-#- name: Run system dependencies playbook
-#  import_playbook: playbooks/config.yaml
-#
-#- name: Run Klipper playbook
-#  import_playbook: playbooks/klipper.yaml
-#
-#- name: Run Moonraker playbook
-#  import_playbook: playbooks/moonraker.yaml
+- name: Run system dependencies playbook
+  import_playbook: playbooks/deps.yaml
+
+- name: Run system dependencies playbook
+  import_playbook: playbooks/config.yaml
+
+- name: Run Klipper playbook
+  import_playbook: playbooks/klipper.yaml
+
+- name: Run Moonraker playbook
+  import_playbook: playbooks/moonraker.yaml
 
 - name: Run Fluidd playbook
   import_playbook: playbooks/fluidd.yaml
-
-#- name: Run Webcam playbook
-#  import_playbook: playbooks/webcam.yaml
-
-#- name: Run AVRDUDE playbook
-#  import_playbook: playbooks/avrdude.yaml
 
 - name: Finalize
   import_playbook: playbooks/finalize.yaml
