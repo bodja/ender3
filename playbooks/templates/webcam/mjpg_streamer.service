@@ -1,0 +1,19 @@
+# Systemd service for mjpg_streamer
+[Unit]
+Description=Starts mjpg_streamer on startup
+After=network-online.target
+Before=nginx
+Wants=udev.target
+
+[Install]
+Alias=mjpgstreamer1
+WantedBy=multi-user.target
+
+[Service]
+Type=simple
+User=$USER
+RemainAfterExit=yes
+EnvironmentFile={{ env_file }}
+ExecStart=mjpg_streamer -i "/usr/local/lib/mjpg-streamer/input_uvc.so -n -f 10 -r 1280x720" -o "/usr/local/lib/mjpg-streamer/output_http.so -p 8080 -w /usr/local/share/mjpg-streamer/www"
+Restart=always
+RestartSec=10

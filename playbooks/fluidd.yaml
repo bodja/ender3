@@ -1,0 +1,52 @@
+- name: Fluidd
+  hosts: rpi
+  vars_files:
+    - vars/fluidd.yaml
+  tasks:
+  - name: Include related variables
+    ansible.builtin.include_vars:
+      file: '{{ item.file }}'
+      name: '{{ item.name }}'
+    loop:
+      - { file: vars/moonraker.yaml, name: moonraker }
+
+  - name: 'Add directory "{{ dir }}"'
+    ansible.builtin.file:
+      path: '{{ dir }}'
+      state: directory
+      owner: '{{ USER }}'
+      group: '{{ USER }}'
+    become: yes
+
+  - name: 'Add directory "{{ logs_dir }}"'
+    ansible.builtin.file:
+      path: '{{ logs_dir }}'
+      state: directory
+      group: '{{ GROUP_NGINX }}'
+    become: yes
+
+  - name: Download
+    ansible.builtin.unarchive:
+      remote_src: yes
+#      src: 'https://github.com/{{ repo_name }}/releases/latest/download/fluidd.zip'
+      src: 'https://github.com/{{ repo_name }}/releases/download/{{ version }}/fluidd.zip'
+      dest: '{{ dir }}'
+
+  - name: NGINX config
+    ansible.builtin.template:
+      src: ../templates/fluidd/nginx/sites-available/fluidd.conf
+      dest: /etc/nginx/sites-available/fluidd.conf
+    become: yes
+
+  - name: Enable Fluidd site
+    ansible.builtin.file:
+      src: /etc/nginx/sites-available/fluidd.conf
+      dest: /etc/nginx/sites-enabled/fluidd.conf
+      state: link
+    become: yes
+
+  - name: Restart NGINX
+    ansible.builtin.systemd_service:
+      name: nginx
+      state: reloaded
+    become: yes

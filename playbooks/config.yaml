@@ -1,0 +1,7 @@
+- name: Printer configs
+  hosts: rpi
+  tasks:
+  - name: Copy configs to rpi
+    ansible.builtin.copy:
+      src: ../config/
+      dest: '{{ PRINTER_CONFIG_DIR }}'

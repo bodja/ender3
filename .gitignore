@@ -1,0 +1,6 @@
+.DS_Store
+.idea/
+.bash_history
+.venv
+.ssh
+dump/

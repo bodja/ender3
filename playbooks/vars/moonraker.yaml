@@ -1,0 +1,9 @@
+repo: https://github.com/Arksine/moonraker.git
+version: master
+dir: '{{ PRINTER_DIR }}/moonraker'
+data_dir: '{{ PRINTER_DATA_DIR }}'
+venv: '{{ ENVS_DIR }}/moonraker'
+log_file: '{{ PRINTER_LOGS_DIR }}/moonraker.log'
+config_file: '{{ PRINTER_CONFIG_DIR }}/moonraker.conf'
+server_host: 0.0.0.0
+server_port: 7125

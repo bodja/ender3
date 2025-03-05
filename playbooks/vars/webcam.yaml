@@ -1,0 +1,4 @@
+repo: https://github.com/jacksonliam/mjpg-streamer.git
+version: v0.12.0
+dir: '{{ PRINTER_DIR }}/mjpg-streamer'
+env_file: '{{ ENVS_DIR }}/mjpg_streamer.env'

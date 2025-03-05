@@ -1,0 +1,4 @@
+repo_name: fluidd-core/fluidd
+version: v1.32.3
+dir: /var/www/fluidd
+logs_dir: '{{ LOGS_DIR }}/fluidd'

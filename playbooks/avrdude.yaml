@@ -1,0 +1,40 @@
+- name: AVRDUDE
+  hosts: rpi
+  vars_files:
+    - vars/avrdude.yaml
+  tasks:
+    - name: Install system packages
+      ansible.builtin.apt:
+        pkg:
+          - build-essential
+          - cmake
+          - flex
+          - bison
+          - libelf-dev
+          - libusb-dev
+          - libhidapi-dev
+          - libftdi1-dev
+          - libreadline-dev
+      become: yes
+
+    - name: Download
+      ansible.builtin.git:
+        repo: '{{ repo }}'
+        dest: '{{ dir }}'
+        single_branch: yes
+        version: '{{ version }}'
+        depth: 1
+
+    - name: Build
+      ansible.builtin.shell:
+#        cmd: cmake -D CMAKE_BUILD_TYPE=RelWithDebInfo -D HAVE_LINUXGPIO=1 -D HAVE_LINUXSPI=1 -B build_linux && ./build.sh
+        cmd: ./build.sh
+      args:
+        chdir: '{{ dir }}'
+
+    - name: Install avrdude
+      ansible.builtin.shell:
+        cmd: cmake --build build_linux --target install
+      args:
+        chdir: '{{ dir }}'
+      become: yes

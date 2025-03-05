@@ -1,0 +1,58 @@
+- name: Klipper
+  hosts: rpi
+  vars_files:
+    - vars/klipper.yaml
+  tasks:
+  - name: Install system packages
+    ansible.builtin.apt:
+      pkg:
+        # python cffi
+        - python3-dev
+        - libffi-dev
+        - build-essential
+        # kconfig requirements
+        - libncurses-dev
+        # hub-ctrl
+        - libusb-dev
+        # AVR chip installation and building
+        - avrdude
+        - gcc-avr
+        - binutils-avr
+        - avr-libc
+        # ARM chip installation and building
+        - stm32flash
+        - libnewlib-arm-none-eabi
+        - gcc-arm-none-eabi
+        - binutils-arm-none-eabi
+        - libusb-1.0-0
+        - pkg-config
+    become: yes
+
+  - name: Download
+    ansible.builtin.git:
+      repo: '{{ repo }}'
+      dest: '{{ dir }}'
+      version: '{{ version }}'
+
+  - name: Create python env for klippy
+    ansible.builtin.shell: python3 -m venv {{ venv }}
+
+  - name: Install klippy python requirements
+    ansible.builtin.pip:
+      requirements: '{{ PRINTER_DIR }}/klipper/scripts/klippy-requirements.txt'
+      virtualenv: '{{ venv }}'
+
+  - name: Create systemd service file
+    ansible.builtin.template:
+      src: ../templates/klipper/klipper.service
+      dest: '/etc/systemd/system/{{ service_name }}.service'
+    become: yes
+
+  - name: 'Enable {{ service_name }}.service'
+    ansible.builtin.systemd:
+      daemon_reload: true
+      name: '{{ service_name }}.service'
+      enabled: true
+      masked: no
+      state: started
+    become: yes

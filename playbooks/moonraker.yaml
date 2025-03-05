@@ -1,0 +1,63 @@
+- name: Moonraker
+  hosts: rpi
+  vars_files:
+    - vars/moonraker.yaml
+  tasks:
+  - name: Include related variables
+    ansible.builtin.include_vars:
+      file: '{{ item.file }}'
+      name: '{{ item.name }}'
+    loop:
+      - { file: vars/klipper.yaml, name: klipper }
+      - { file: vars/fluidd.yaml, name: fluidd }
+
+  - name: Prepare directories
+    ansible.builtin.file:
+      path: '{{ item }}'
+      state: directory
+    loop:
+      - '{{ data_dir }}/config'
+
+  - name: Copy config file
+    ansible.builtin.template:
+      src: ../templates/moonraker/moonraker.conf
+      dest: '{{ config_file }}'
+
+  - name: Download
+    ansible.builtin.git:
+      repo: '{{ repo }}'
+      dest: '{{ dir }}'
+      version: '{{ version }}'
+      single_branch: yes
+      depth: 1
+
+  - name: Install
+    ansible.builtin.shell: '{{ dir }}/scripts/install-moonraker.sh -f'
+    environment:
+      MOONRAKER_VENV: '{{ venv }}'
+      MOONRAKER_CONFIG_PATH: '{{ config_file }}'
+      MOONRAKER_LOG_PATH: '{{ log_file }}'
+      MOONRAKER_DATA_PATH: '{{ data_dir }}'
+      MOONRAKER_SPEEDUPS: y
+      MOONRAKER_DISABLE_SYSTEMCTL: y
+
+  - name: Enable "moonraker.service"
+    ansible.builtin.systemd:
+      name: moonraker.service
+      daemon_reload: true
+      enabled: true
+      masked: no
+      state: started
+    become: yes
+
+  - name: NGINX config
+    ansible.builtin.template:
+      src: ../templates/moonraker/nginx/conf.d/moonraker.conf
+      dest: /etc/nginx/conf.d/moonraker.conf
+    become: yes
+
+  - name: Restart NGINX
+    ansible.builtin.systemd_service:
+      name: nginx
+      state: reloaded
+    become: yes

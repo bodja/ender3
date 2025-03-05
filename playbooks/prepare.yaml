@@ -1,0 +1,53 @@
+- name: Prepare
+  hosts: rpi
+  tasks:
+  - name: Upgrade apt packages
+    ansible.builtin.apt:
+      upgrade: yes
+      update_cache: yes
+    become: yes
+
+  - name: Install packages
+    ansible.builtin.apt:
+      pkg:
+        - nginx
+        - git
+        - unzip
+    become: yes
+
+  - name: NGINX configs
+    ansible.builtin.template:
+      src: '{{ item.src }}'
+      dest: '{{ item.dest }}'
+    become: yes
+    loop:
+      - src: ../templates/deps/nginx/conf.d/connection_upgrade.conf
+        dest: /etc/nginx/conf.d/connection_upgrade.conf
+
+  - name: 'Make sure "{{ GROUP_NGINX }}" group has permission to /var/www/'
+    ansible.builtin.file:
+      path: '/var/www'
+      group: '{{ GROUP_NGINX }}'
+      mode: '0770'
+      state: directory
+    become: yes
+
+  - name: Disable NGINX default site
+    ansible.builtin.file:
+      path: /etc/nginx/sites-enabled/default
+      state: absent
+    become: yes
+
+  - name: 'Add user "{{ USER }}" to nginx group "{{ GROUP_NGINX }}"'
+    ansible.builtin.user:
+      name: '{{ USER }}'
+      groups: '{{ GROUP_NGINX }}'
+      append: yes
+    become: yes
+
+  - name: 'Prepare directory for printer logs "{{ PRINTER_LOGS_DIR }}"'
+    ansible.builtin.file:
+      path: '{{ PRINTER_LOGS_DIR }}'
+      state: directory
+      owner: '{{ USER }}'
+    become: yes

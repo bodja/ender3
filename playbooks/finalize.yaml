@@ -1,0 +1,14 @@
+- name: Finalize
+  hosts: rpi
+  tasks:
+  - name: Configure PWM fan
+    ansible.builtin.lineinfile:
+      path: /boot/firmware/config.txt
+      insertafter: '^\[all\]$'
+      line: 'dtoverlay=pwm-gpio-fan,fan_gpio=14'
+      state: present
+    become: yes
+
+  - name: Reboot
+    ansible.builtin.reboot:
+    become: yes

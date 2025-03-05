@@ -1,0 +1,67 @@
+- name: Install Webcam
+  hosts: rpi
+  tasks:
+    - name: Install system packages
+      ansible.builtin.apt:
+        pkg:
+          - cmake
+          - libjpeg9-dev
+          - gcc
+          - g++
+      become: yes
+
+    - name: Download
+      ansible.builtin.git:
+        repo: '{{ repo }}'
+        dest: '{{ dir }}'
+        single_branch: yes
+        version: '{{ version }}'
+        depth: 1
+
+    - name: Build
+      community.general.make:
+        chdir: '{{ dir }}/mjpg-streamer-experimental'
+
+    - name: Install
+      community.general.make:
+        chdir: '{{ dir }}/mjpg-streamer-experimental'
+        target: install
+      become: true
+
+    - name: Cleanup
+      ansible.builtin.file:
+        path: '{{ dir }}'
+        state: absent
+
+    - name: NGINX config
+      ansible.builtin.template:
+        src: ../templates/webcam/nginx/conf.d/webcam.conf
+        dest: /etc/nginx/conf.d/webcam.conf
+      become: yes
+
+    - name: NGINX config
+      ansible.builtin.template:
+        src: ../templates/webcam/nginx/conf.d/webcam.conf
+        dest: /etc/nginx/conf.d/webcam.conf
+      become: yes
+
+    - name: Create systemd service file
+      ansible.builtin.template:
+        src: ../templates/webcam/mjpg_streamer.env
+        dest: '{{ env_file }}'
+      become: yes
+
+    - name: Create systemd service file
+      ansible.builtin.template:
+        src: ../templates/webcam/mpg_streamer.service
+        dest: '/etc/systemd/system/mpg_streamer.service'
+      become: yes
+
+    - name: Enable "mjpg_streamer.service"
+      ansible.builtin.systemd:
+        name: mjpg_streamer.service
+        daemon_reload: true
+        enabled: true
+        masked: no
+        state: started
+      become: yes

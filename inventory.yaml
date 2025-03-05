@@ -1,0 +1,14 @@
+printer:
+  vars:
+    USER: printer
+    GROUP_NGINX: www-data
+    PRINTER_DIR: '/home/{{ USER }}'
+    PRINTER_DATA_DIR: '{{ PRINTER_DIR }}/data'
+    PRINTER_CONFIG_DIR: '{{ PRINTER_DATA_DIR }}/config'
+    ENVS_DIR: '{{ PRINTER_DIR }}/envs'
+    LOGS_DIR: /var/log
+    PRINTER_LOGS_DIR: '{{ LOGS_DIR }}/printer'
+  hosts:
+    rpi:
+      ansible_host: '{{ rpi_ip }}'
+      ansible_user: '{{ USER }}'

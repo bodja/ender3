@@ -1,0 +1,17 @@
+# Systemd service file for Klipper
+[Unit]
+Description=Starts Klipper on startup
+After=network-online.target
+Before=moonraker.service
+Wants=udev.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=simple
+User={{ USER }}
+RemainAfterExit=yes
+ExecStart={{ venv }}/bin/python {{ dir }}/klippy/klippy.py {{ PRINTER_CONFIG_DIR }}/printer.cfg -a {{ sock_file }} -l {{ log_file }}
+Restart=always
+RestartSec=10

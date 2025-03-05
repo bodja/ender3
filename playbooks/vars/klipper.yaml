@@ -1,0 +1,7 @@
+repo: https://github.com/Klipper3d/klipper.git
+version: master
+dir: '{{ PRINTER_DIR }}/klipper'
+venv: '{{ ENVS_DIR }}/klippy'
+log_file: '{{ PRINTER_LOGS_DIR }}/klippy.log'
+sock_file: '/tmp/klipper.sock'
+service_name: 'klipper'
