@@ -129,6 +129,7 @@ It is recommended to always use `spreadCycle` mode (by not specifying `stealthch
 
 ![1.1.5-back.jpeg](docs/printer/1.1.5-back.jpeg)
 ![1.1.5-front.jpeg](docs/printer/1.1.5-front.jpeg)
+![wiring](docs/printer/wiring.jpg)
 
 ## Other refs
 - [KAMP](https://github.com/kyleisah/Klipper-Adaptive-Meshing-Purging). I was using it purging and nice smart parking
