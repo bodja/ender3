@@ -134,10 +134,30 @@ It is recommended to always use `spreadCycle` mode (by not specifying `stealthch
 ## Other refs
 - [KAMP](https://github.com/kyleisah/Klipper-Adaptive-Meshing-Purging). I was using it purging and nice smart parking
 
+## Configure slicer (I use PrusaSlicer)
+### [[print_stats]](https://www.klipper3d.org/G-Codes.html#print_stats)
+
+Start G-code:
+```
+START_PRINT BED_TEMP={first_layer_bed_temperature[0]} EXTRUDER_TEMP={first_layer_temperature[0]} TOTAL_LAYER=[total_layer_count]
+```
+Start G-code:
+```
+START_PRINT BED_TEMP={first_layer_bed_temperature[0]} EXTRUDER_TEMP={first_layer_temperature[0]} TOTAL_LAYER=[total_layer_count]
+```
+End G-code:
+```
+END_PRINT
+```
+After layer change G-code:
+```
+SET_PRINT_STATS_INFO CURRENT_LAYER={layer_num + 1}
+```
+
 ## Mods:
-- (Enclosure for electronics)[https://www.printables.com/model/1199913-ender-3-raspberry-pi-housing]
-- (Cooling)[https://cults3d.com/en/3d-model/tool/minimus-snap-4010-3-pro-3v2-5-neo-max]
-- (Wiring)[https://cults3d.com/en/3d-model/tool/armadillo-flex-wire-conduit]
-- (PSU relocation)[https://www.thingiverse.com/thing:5394166]
-- (LGX Lite PRO eXtruder)[https://www.bondtech.se/product/lgx-lite-pro-extruder/]
-- (Hotend)[https://www.bondtech.se/product/copperhead-for-ender-cr-10s-on-ddx-ph2/]
+- [Enclosure for electronics](https://www.printables.com/model/1199913-ender-3-raspberry-pi-housing)
+- [Cooling](https://cults3d.com/en/3d-model/tool/minimus-snap-4010-3-pro-3v2-5-neo-max)
+- [Wiring](https://cults3d.com/en/3d-model/tool/armadillo-flex-wire-conduit)
+- [PSU relocation](https://www.thingiverse.com/thing:5394166)
+- [LGX Lite PRO eXtruder](https://www.bondtech.se/product/lgx-lite-pro-extruder/)
+- [Hotend](https://www.bondtech.se/product/copperhead-for-ender-cr-10s-on-ddx-ph2/)
