@@ -139,6 +139,10 @@ It is recommended to always use `spreadCycle` mode (by not specifying `stealthch
 
 Start G-code:
 ```
+{if not is_nil(filament_retract_length[0])}SET_RETRACTION RETRACT_LENGTH={filament_retract_length[0]}{endif}
+{if not is_nil(filament_retract_speed[0])}SET_RETRACTION RETRACT_SPEED={filament_retract_speed[0]}{endif}
+{if not is_nil(filament_retract_restart_extra[0])}SET_RETRACTION UNRETRACT_EXTRA_LENGTH={filament_retract_restart_extra[0]}{endif}
+{if not is_nil(filament_deretract_speed[0])}SET_RETRACTION UNRETRACT_SPEED={filament_deretract_speed[0]}{endif}
 START_PRINT BED_TEMP={first_layer_bed_temperature[0]} EXTRUDER_TEMP={first_layer_temperature[0]} TOTAL_LAYER=[total_layer_count]
 ```
 Start G-code:
