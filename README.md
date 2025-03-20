@@ -9,6 +9,8 @@
 
 ## Installation guide
 
+WARNING: do not run your printer on my printer [config](config/) without reading and understanding it. I have several mods, which wont fit stock setup.
+
 ### 1. Install `Raspberry Pi OS Lite` (both 32 and 64 bit will work fine)
 Use [raspberry Pi Imager](https://www.raspberrypi.com/software/) for installation.
 Before installing, make sure that in settings ssh service is activated and add ssh key. 
@@ -132,7 +134,7 @@ It is recommended to always use `spreadCycle` mode (by not specifying `stealthch
 ![wiring](docs/printer/wiring.jpg)
 
 ## Other refs
-- [KAMP](https://github.com/kyleisah/Klipper-Adaptive-Meshing-Purging). I was using it purging and nice smart parking
+- [KAMP](https://github.com/kyleisah/Klipper-Adaptive-Meshing-Purging). I was using it for purging and parking
 
 ## Configure slicer (I use PrusaSlicer)
 ### [[print_stats]](https://www.klipper3d.org/G-Codes.html#print_stats)
@@ -143,10 +145,6 @@ Start G-code:
 {if not is_nil(filament_retract_speed[0])}SET_RETRACTION RETRACT_SPEED={filament_retract_speed[0]}{endif}
 {if not is_nil(filament_retract_restart_extra[0])}SET_RETRACTION UNRETRACT_EXTRA_LENGTH={filament_retract_restart_extra[0]}{endif}
 {if not is_nil(filament_deretract_speed[0])}SET_RETRACTION UNRETRACT_SPEED={filament_deretract_speed[0]}{endif}
-START_PRINT BED_TEMP={first_layer_bed_temperature[0]} EXTRUDER_TEMP={first_layer_temperature[0]} TOTAL_LAYER=[total_layer_count]
-```
-Start G-code:
-```
 START_PRINT BED_TEMP={first_layer_bed_temperature[0]} EXTRUDER_TEMP={first_layer_temperature[0]} TOTAL_LAYER=[total_layer_count]
 ```
 End G-code:
