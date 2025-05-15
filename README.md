@@ -158,8 +158,11 @@ SET_PRINT_STATS_INFO CURRENT_LAYER={layer_num + 1}
 
 ## Mods:
 - [Enclosure for electronics](https://www.printables.com/model/1199913-ender-3-raspberry-pi-housing)
+- [PSU relocation](https://www.printables.com/model/1287568-ender-3-meanwell-psu-relocation)
+- [Belt tensioner x-axis](https://www.thingiverse.com/thing:2854971)
+  - [X-tensioner shortened body](https://www.printables.com/model/1294669-ender-3-pro-belt-tensioner-x-axis)
+- [Belt tensioner y-axis](https://www.thingiverse.com/thing:3289057)
 - [Cooling](https://cults3d.com/en/3d-model/tool/minimus-snap-4010-3-pro-3v2-5-neo-max)
 - [Wiring](https://cults3d.com/en/3d-model/tool/armadillo-flex-wire-conduit)
-- [PSU relocation](https://www.thingiverse.com/thing:5394166)
 - [LGX Lite PRO eXtruder](https://www.bondtech.se/product/lgx-lite-pro-extruder/)
 - [Hotend](https://www.bondtech.se/product/copperhead-for-ender-cr-10s-on-ddx-ph2/)
