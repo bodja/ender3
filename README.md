@@ -139,7 +139,7 @@ It is recommended to always use `spreadCycle` mode (by not specifying `stealthch
 ## Configure slicer (I use PrusaSlicer)
 ### [[print_stats]](https://www.klipper3d.org/G-Codes.html#print_stats)
 
-Start G-code:
+**Start G-code:**
 ```
 {if not is_nil(filament_retract_length[0])}SET_RETRACTION RETRACT_LENGTH={filament_retract_length[0]}{endif}
 {if not is_nil(filament_retract_speed[0])}SET_RETRACTION RETRACT_SPEED={filament_retract_speed[0]}{endif}
@@ -147,22 +147,28 @@ Start G-code:
 {if not is_nil(filament_deretract_speed[0])}SET_RETRACTION UNRETRACT_SPEED={filament_deretract_speed[0]}{endif}
 START_PRINT BED_TEMP={first_layer_bed_temperature[0]} EXTRUDER_TEMP={first_layer_temperature[0]} TOTAL_LAYER=[total_layer_count]
 ```
-End G-code:
+**End G-code:**
 ```
 END_PRINT
 ```
-After layer change G-code:
+**After layer change G-code:**
 ```
 SET_PRINT_STATS_INFO CURRENT_LAYER={layer_num + 1}
 ```
 
 ## Mods:
 - [Enclosure for electronics](https://www.printables.com/model/1199913-ender-3-raspberry-pi-housing)
-- [PSU relocation](https://www.printables.com/model/1287568-ender-3-meanwell-psu-relocation)
-- [Belt tensioner x-axis](https://www.thingiverse.com/thing:2854971)
-  - [X-tensioner shortened body](https://www.printables.com/model/1294669-ender-3-pro-belt-tensioner-x-axis)
-- [Belt tensioner y-axis](https://www.thingiverse.com/thing:3289057)
-- [Cooling](https://cults3d.com/en/3d-model/tool/minimus-snap-4010-3-pro-3v2-5-neo-max)
-- [Wiring](https://cults3d.com/en/3d-model/tool/armadillo-flex-wire-conduit)
-- [LGX Lite PRO eXtruder](https://www.bondtech.se/product/lgx-lite-pro-extruder/)
-- [Hotend](https://www.bondtech.se/product/copperhead-for-ender-cr-10s-on-ddx-ph2/)
+- [Meanwell PSU relocation](https://www.printables.com/model/1287568-ender-3-meanwell-psu-relocation)
+
+### Belt tensioners by [Cornely_Cool](https://www.thingiverse.com/cornely_cool/designs):
+  - [X-axis](https://www.thingiverse.com/thing:2854971)
+    - [X-axis remixed (screw hole aligned with the screw hole on the profile)](https://www.printables.com/model/1294669-ender-3-pro-belt-tensioner-x-axis)
+  - [Y-axis](https://www.thingiverse.com/thing:3289057)
+
+### Printhead:
+- [Cooling (Minimus Snap Z)](https://cults3d.com/en/3d-model/tool/minimus-snap-4010-3-pro-3v2-5-neo-max)
+- [Extruder (Bondtech LGX Lite PRO eXtruder)](https://www.bondtech.se/product/lgx-lite-pro-extruder/)
+- [Hot Block (Slice Engineering)](https://www.sliceengineering.com/products/copperhead-hot-block)
+- [Copperhead Heat Break (Slice Engineering)](https://www.sliceengineering.com/products/copperhead-heat-break)
+- [Nozzle (Slice Engineering GammaMaster AP3X 0.4)](https://www.sliceengineering.com/products/gammamaster-nozzle?variant=43540963131633)
+- [Wires cover (Armadillo Flex EZR)](https://cults3d.com/en/3d-model/tool/armadillo-flex-wire-conduit)
