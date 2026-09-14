@@ -19,17 +19,9 @@ repos:
         language: system
         pass_filenames: false
         files: ^(playbook\.yaml|inventory\.yaml|ansible\.cfg|playbooks/.*\.yaml)$
-        entry: uv
+        entry: ./ansible.sh
         args:
-          - run
-          - --no-project
-          # webcam.yaml needs community.general, so the full ansible package
-          - --with
-          - ansible==14.4.0  # keep in sync with install.sh
-          - ansible-playbook
           - --syntax-check
-          - -i
-          - inventory.yaml
           # inventory templates ansible_host from it; unused by --syntax-check
           - -e
           - rpi_ip=0.0.0.0

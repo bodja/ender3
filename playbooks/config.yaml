@@ -1,7 +1,25 @@
 - name: Printer configs
   hosts: rpi
+  vars_files:
+    - vars/klipper.yaml
+
+  handlers:
+  - name: Restart klipper
+    ansible.builtin.systemd_service:
+      name: '{{ service_name }}.service'
+      state: restarted
+    become: yes
+    when: klipper_unit.stat.exists
+
   tasks:
+  # absent on a first install, where klipper.yaml starts the service afterwards
+  - name: Look for the klipper service
+    ansible.builtin.stat:
+      path: '/etc/systemd/system/{{ service_name }}.service'
+    register: klipper_unit
+
   - name: Copy configs to rpi
     ansible.builtin.copy:
       src: ../config/
       dest: '{{ PRINTER_CONFIG_DIR }}'
+    notify: Restart klipper

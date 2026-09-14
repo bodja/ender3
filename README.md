@@ -20,6 +20,12 @@ Before installing, make sure that in settings ssh service is activated and add s
 ./install.sh
 ```
 
+### 2.1 Update the printer config only
+Pushes [config/](config/) to the printer, restarting Klipper only if something changed.
+```bash
+./push-config.sh           # add --check --diff to preview
+```
+
 ### 3. Install Klipper firmware to the printer board.
 First installation is a bit tricky, but after that it is as easy as described in [Klipper Installation](https://www.klipper3d.org/Installation.html).
 
