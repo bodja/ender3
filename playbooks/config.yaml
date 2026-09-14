@@ -18,8 +18,10 @@
       path: '/etc/systemd/system/{{ service_name }}.service'
     register: klipper_unit
 
-  - name: Copy configs to rpi
-    ansible.builtin.copy:
-      src: ../config/
-      dest: '{{ PRINTER_CONFIG_DIR }}'
+  # flattened because SAVE_CONFIG refuses to overwrite a value set in an include
+  - name: Assemble printer.cfg from the config fragments
+    ansible.builtin.assemble:
+      src: ../config/printer/
+      dest: '{{ PRINTER_CONFIG_DIR }}/printer.cfg'
+      remote_src: false
     notify: Restart klipper

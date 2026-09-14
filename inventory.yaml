@@ -12,5 +12,5 @@ printer:
     PRINTER_LOGS_DIR: '{{ LOGS_DIR }}/printer'
   hosts:
     rpi:
-      ansible_host: '{{ rpi_ip }}'
+      ansible_host: '{{ RPI_IP }}'
       ansible_user: '{{ USER }}'

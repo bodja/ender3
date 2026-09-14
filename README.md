@@ -16,12 +16,17 @@ Use [raspberry Pi Imager](https://www.raspberrypi.com/software/) for installatio
 Before installing, make sure that in settings ssh service is activated and add ssh key.
 
 ### 2. Start installation
+`RPI_IP` is read from `.env`, which is gitignored. Override it per run with `-e RPI_IP=<pi-ip>`.
 ```bash
+cp .env.example .env  # then fill in RPI_IP
 ./install.sh
 ```
 
 ### 2.1 Update the printer config only
-Pushes [config/](config/) to the printer, restarting Klipper only if something changed.
+Assembles [config/printer/](config/printer/) into a single `printer.cfg` on the printer and
+restarts Klipper only if something changed. Klipper's `SAVE_CONFIG` refuses to overwrite a
+value that came from an `[include]`, so the fragments are flattened on the way over.
+Anything `SAVE_CONFIG` writes lives only on the pi — copy it back here or the next push drops it.
 ```bash
 ./push-config.sh           # add --check --diff to preview
 ```

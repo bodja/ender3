@@ -2,8 +2,7 @@
 # Copies config/ to the printer, restarting Klipper only if something changed.
 set -e
 
-printf 'Raspberry Pi IP: '
-read RPI_IP
+cd "$( dirname -- "${BASH_SOURCE[0]}" )"
+if [ -f .env ]; then . ./.env; fi
 
-"$( dirname -- "${BASH_SOURCE[0]}" )/ansible.sh" \
-  -e rpi_ip="${RPI_IP}" playbooks/config.yaml "$@"
+./ansible.sh -e RPI_IP="${RPI_IP:?not set - copy .env.example to .env}" playbooks/config.yaml "$@"

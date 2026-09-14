@@ -24,7 +24,7 @@ repos:
           - --syntax-check
           # inventory templates ansible_host from it; unused by --syntax-check
           - -e
-          - rpi_ip=0.0.0.0
+          - RPI_IP=0.0.0.0
           - playbook.yaml
           - playbooks/avrdude.yaml
           - playbooks/firmware.yaml
