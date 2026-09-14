@@ -13,7 +13,7 @@ WARNING: do not run your printer on my printer [config](config/) without reading
 
 ### 1. Install `Raspberry Pi OS Lite` (both 32 and 64 bit will work fine)
 Use [raspberry Pi Imager](https://www.raspberrypi.com/software/) for installation.
-Before installing, make sure that in settings ssh service is activated and add ssh key. 
+Before installing, make sure that in settings ssh service is activated and add ssh key.
 
 ### 2. Start installation
 ```bash
@@ -134,7 +134,7 @@ It is recommended to always use `spreadCycle` mode (by not specifying `stealthch
 ![wiring](docs/printer/wiring.jpg)
 
 ## Other refs
-- [KAMP](https://github.com/kyleisah/Klipper-Adaptive-Meshing-Purging). I was using it for purging and parking
+- [KAMP](https://github.com/kyleisah/Klipper-Adaptive-Meshing-Purging). Replaced by native `BED_MESH_CALIBRATE ADAPTIVE=1` for meshing, and by `_PARK_PRE_PRINT` / `_LINE_PURGE` in [macros.cfg](config/printer/macros.cfg) for parking and purging
 
 ## Configure slicer (I use PrusaSlicer)
 ### [[print_stats]](https://www.klipper3d.org/G-Codes.html#print_stats)
