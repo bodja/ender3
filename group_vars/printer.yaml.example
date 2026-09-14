@@ -1,0 +1,2 @@
+# Copy to printer.yaml (gitignored). Auto-loaded by ansible from the inventory group.
+RPI_IP:

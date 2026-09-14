@@ -16,9 +16,10 @@ Use [raspberry Pi Imager](https://www.raspberrypi.com/software/) for installatio
 Before installing, make sure that in settings ssh service is activated and add ssh key.
 
 ### 2. Start installation
-`RPI_IP` is read from `.env`, which is gitignored. Override it per run with `-e RPI_IP=<pi-ip>`.
+`RPI_IP` comes from `group_vars/printer.yaml`, which is gitignored and auto-loaded by ansible.
+Override it per run with `-e RPI_IP=<pi-ip>`.
 ```bash
-cp .env.example .env  # then fill in RPI_IP
+cp group_vars/printer.yaml.example group_vars/printer.yaml  # then fill in RPI_IP
 ./install.sh
 ```
 

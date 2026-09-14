@@ -4,4 +4,4 @@
 .venv
 .ssh
 dump/
-.env
+group_vars/printer.yaml
