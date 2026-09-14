@@ -17,7 +17,7 @@ Before installing, make sure that in settings ssh service is activated and add s
 
 ### 2. Start installation
 ```bash
-source ./install.sh
+./install.sh
 ```
 
 ### 3. Install Klipper firmware to the printer board.

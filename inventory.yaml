@@ -6,6 +6,8 @@ printer:
     PRINTER_DATA_DIR: '{{ PRINTER_DIR }}/data'
     PRINTER_CONFIG_DIR: '{{ PRINTER_DATA_DIR }}/config'
     ENVS_DIR: '{{ PRINTER_DIR }}/envs'
+    UV: '{{ PRINTER_DIR }}/.local/bin/uv'
+    UV_VERSION: '0.12.13'
     LOGS_DIR: /var/log
     PRINTER_LOGS_DIR: '{{ LOGS_DIR }}/printer'
   hosts:

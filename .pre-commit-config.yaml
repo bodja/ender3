@@ -16,13 +16,17 @@ repos:
     hooks:
       - id: ansible-syntax-check
         name: ansible-syntax-check
-        language: python
-        # webcam.yaml needs community.general, so the full ansible package, not ansible-core
-        additional_dependencies: ["ansible==11.3.0"]  # keep in sync with install.sh
+        language: system
         pass_filenames: false
         files: ^(playbook\.yaml|inventory\.yaml|ansible\.cfg|playbooks/.*\.yaml)$
-        entry: ansible-playbook
+        entry: uv
         args:
+          - run
+          - --no-project
+          # webcam.yaml needs community.general, so the full ansible package
+          - --with
+          - ansible==14.4.0  # keep in sync with install.sh
+          - ansible-playbook
           - --syntax-check
           - -i
           - inventory.yaml

@@ -34,13 +34,16 @@
       dest: '{{ dir }}'
       version: '{{ version }}'
 
+  # system python so python3-dev stays the right headers for cffi and chelper
   - name: Create python env for klippy
-    ansible.builtin.shell: python3 -m venv {{ venv }}
+    ansible.builtin.command: '{{ UV }} venv --python /usr/bin/python3 {{ venv }}'
+    args:
+      creates: '{{ venv }}/bin/python'
 
   - name: Install klippy python requirements
-    ansible.builtin.pip:
-      requirements: '{{ PRINTER_DIR }}/klipper/scripts/klippy-requirements.txt'
-      virtualenv: '{{ venv }}'
+    ansible.builtin.command: >-
+      {{ UV }} pip sync --python {{ venv }}/bin/python
+      {{ dir }}/scripts/klippy-requirements.txt
 
   - name: Create systemd service file
     ansible.builtin.template:

@@ -13,7 +13,22 @@
         - nginx
         - git
         - unzip
+        - curl
     become: yes
+
+  - name: Check the installed uv version
+    ansible.builtin.command: '{{ UV }} --version'
+    register: uv_installed
+    changed_when: false
+    failed_when: false  # not installed yet is the normal first-run case
+
+  - name: Install uv
+    ansible.builtin.shell:
+      cmd: curl -LsSf https://astral.sh/uv/{{ UV_VERSION }}/install.sh | sh
+    environment:
+      # the installer otherwise picks its own dir and UV stops pointing at it
+      UV_INSTALL_DIR: '{{ UV | dirname }}'
+    when: UV_VERSION not in uv_installed.stdout.split()  # exact field, not a substring
 
   - name: NGINX configs
     ansible.builtin.template:
