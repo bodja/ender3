@@ -1,4 +1,4 @@
-# Ender3 on steroids
+# Ender3 on Klipper
 (Creality 1.1.5 / tmc2208 UART) with Klipper on Raspberry Pi 3 Model B
 
 **This repo is just a documentation and dump for myself on what I did. An easy way to recall and recover things. And maybe for someone else, who has stepped on same the road of customizing their old Ender.**
