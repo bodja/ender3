@@ -95,8 +95,11 @@ class BedSoak:
         drop = self._power_drop()
         if drop is None or drop > self.settled_drop:
             self.held_seconds = 0
-        else:
-            self.held_seconds += 1
+            return
+        self.held_seconds += 1
+        # said once, because soak_seconds keeps climbing after the wait ends
+        if self.held_seconds == self.hold:
+            self.gcode.respond_info(f"{self.name}: settled after {self.soak_seconds}s")
 
     def _reading(self) -> float:
         if self.gave_up:
