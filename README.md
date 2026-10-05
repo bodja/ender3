@@ -146,7 +146,9 @@ It is recommended to always use `spreadCycle` mode (by not specifying `stealthch
 ![wiring](docs/printer/wiring.jpg)
 
 ## Other refs
-- [KAMP](https://github.com/kyleisah/Klipper-Adaptive-Meshing-Purging). Replaced by native `BED_MESH_CALIBRATE ADAPTIVE=1` for meshing, and by `_PARK_PRE_PRINT` / `_LINE_PURGE` in [macros.cfg](config/printer/macros.cfg) for parking and purging
+- [Adding a host module](https://www.klipper3d.org/Code_Overview.html#adding-a-host-module). How `[bed_soak]` in [bed.cfg](config/printer/bed.cfg) loads [bed_soak.py](config/klipper-extras/bed_soak.py)
+- [TEMPERATURE_WAIT](https://www.klipper3d.org/G-Codes.html#temperature_wait). What `WAIT_BED_SOAK` blocks on
+- [KAMP](https://github.com/kyleisah/Klipper-Adaptive-Meshing-Purging). Replaced by native `BED_MESH_CALIBRATE ADAPTIVE=1` for meshing, and by `_LINE_PURGE` in [macros.cfg](config/printer/macros.cfg) for purging
 
 ## Configure slicer (I use PrusaSlicer)
 Printer Settings -> Custom G-code. `START_PRINT` does all the heating, so **Emit temperature

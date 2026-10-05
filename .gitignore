@@ -5,3 +5,4 @@
 .ssh
 dump/
 group_vars/printer.yaml
+__pycache__/

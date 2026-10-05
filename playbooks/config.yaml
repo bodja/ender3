@@ -18,6 +18,19 @@
       path: '/etc/systemd/system/{{ service_name }}.service'
     register: klipper_unit
 
+  # before the config, which fails to load if the section is unknown
+  - name: Install the klipper extras
+    ansible.builtin.copy:
+      src: '{{ item }}'
+      dest: '{{ dir }}/klippy/extras/'
+      mode: '0644'
+    # only the sources, so a local __pycache__ cannot reach the pi
+    loop: >-
+      {{ lookup('ansible.builtin.fileglob',
+                playbook_dir + '/../config/klipper-extras/*.py',
+                wantlist=True) }}
+    notify: Restart klipper
+
   # flattened because SAVE_CONFIG refuses to overwrite a value set in an include
   - name: Assemble printer.cfg from the config fragments
     ansible.builtin.assemble:

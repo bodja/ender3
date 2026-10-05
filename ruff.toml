@@ -1,0 +1,18 @@
+# the klipper extra runs on the pi's system python
+target-version = "py39"
+line-length = 88
+
+[lint]
+select = ["A", "ANN2", "ASYNC", "B", "BLE", "C4", "C90", "COM", "DTZ", "E", "ERA", "EXE", "F",
+          "FLY", "FURB", "G", "I", "ICN", "INP", "INT", "ISC", "LOG", "N", "PERF", "PGH", "PIE",
+          "PL", "PTH", "Q", "RET", "RSE", "RUF", "S", "SIM", "SLOT", "T10", "TC", "TID", "UP",
+          "W", "YTT"]
+ignore = ["RUF012", "COM812"]  # COM812 conflicts with the formatter
+
+[lint.per-file-ignores]
+# an __init__.py here would overwrite klipper's own when the extras are copied
+"config/klipper-extras/*" = ["INP001"]
+
+[lint.flake8-annotations]
+ignore-fully-untyped = false
+suppress-none-returning = true
