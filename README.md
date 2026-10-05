@@ -149,24 +149,54 @@ It is recommended to always use `spreadCycle` mode (by not specifying `stealthch
 - [KAMP](https://github.com/kyleisah/Klipper-Adaptive-Meshing-Purging). Replaced by native `BED_MESH_CALIBRATE ADAPTIVE=1` for meshing, and by `_PARK_PRE_PRINT` / `_LINE_PURGE` in [macros.cfg](config/printer/macros.cfg) for parking and purging
 
 ## Configure slicer (I use PrusaSlicer)
-### [[print_stats]](https://www.klipper3d.org/G-Codes.html#print_stats)
+Printer Settings -> Custom G-code. `START_PRINT` does all the heating, so **Emit temperature
+commands automatically** must stay off, otherwise PrusaSlicer injects an `M109` that heats the
+nozzle through homing and meshing and it drools over the bed.
 
-**Start G-code:**
+**Start G-code**
 ```
-{if not is_nil(filament_retract_length[0])}SET_RETRACTION RETRACT_LENGTH={filament_retract_length[0]}{endif}
-{if not is_nil(filament_retract_speed[0])}SET_RETRACTION RETRACT_SPEED={filament_retract_speed[0]}{endif}
-{if not is_nil(filament_retract_restart_extra[0])}SET_RETRACTION UNRETRACT_EXTRA_LENGTH={filament_retract_restart_extra[0]}{endif}
-{if not is_nil(filament_deretract_speed[0])}SET_RETRACTION UNRETRACT_SPEED={filament_deretract_speed[0]}{endif}
+;{if not is_nil(filament_retract_length[0])}SET_RETRACTION RETRACT_LENGTH={filament_retract_length[0]}{endif}
+;{if not is_nil(filament_retract_speed[0])}SET_RETRACTION RETRACT_SPEED={filament_retract_speed[0]}{endif}
+;{if not is_nil(filament_retract_restart_extra[0])}SET_RETRACTION UNRETRACT_EXTRA_LENGTH={filament_retract_restart_extra[0]}{endif}
+;{if not is_nil(filament_deretract_speed[0])}SET_RETRACTION UNRETRACT_SPEED={filament_deretract_speed[0]}{endif}
 START_PRINT BED_TEMP={first_layer_bed_temperature[0]} EXTRUDER_TEMP={first_layer_temperature[0]} TOTAL_LAYER=[total_layer_count]
 ```
-**End G-code:**
+The `SET_RETRACTION` lines are commented out: retraction comes from the slicer's own `E` moves.
+Uncomment them, uncomment `[firmware_retraction]` in [gcode_features.cfg](config/printer/gcode_features.cfg)
+and tick **Use firmware retraction** only to tune retraction live mid-print. Wipe is unavailable in
+that mode, so finish on a value measured with wipe back on.
+
+**End G-code**
 ```
 END_PRINT
+; total layers count = [total_layer_count]
 ```
-**After layer change G-code:**
+
+**Before layer change G-code**
 ```
+;BEFORE_LAYER_CHANGE
+G92 E0
+;{layer_z}
+```
+
+**After layer change G-code** — feeds [[print_stats]](https://www.klipper3d.org/G-Codes.html#print_stats)
+```
+;AFTER_LAYER_CHANGE
 SET_PRINT_STATS_INFO CURRENT_LAYER={layer_num + 1}
+;{layer_z}
 ```
+
+**Color Change G-code**
+```
+M600
+```
+
+**Pause Print G-code**
+```
+PAUSE
+```
+`M25` is handled by `virtual_sdcard`, which only stops reading the file — it never runs the `PAUSE`
+macro, so the toolhead stays hot on the print with no retract, lift or park.
 
 ## Mods:
 - [Enclosure for electronics](https://www.printables.com/model/1199913-ender-3-raspberry-pi-housing)
