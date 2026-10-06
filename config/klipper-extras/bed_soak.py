@@ -27,7 +27,7 @@ class BedSoak:
         self.printer = config.get_printer()
         self.name = config.get_name().split()[-1]
         self.heater_name: str = config.get("heater", "heater_bed")
-        # unread here: the option exists for WAIT_BED_SOAK to read the bar from
+        # the most power may fall between blocks, in percentage points, to settle
         self.settled_drop: float = config.getfloat("settled_drop", 1.5, above=0.0)
         # a settled bed still drops this much now and then, so one dip is not enough
         self.hold: int = config.getint("hold", 30, minval=1)
